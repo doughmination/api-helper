@@ -4,10 +4,11 @@ A little Android app that quietly tells your own API how your Pixel is doing —
 charging, low-power mode, Wi-Fi, Bluetooth earbuds, and roughly where it is. It's the
 free, self-hosted answer to those paid "battery status" apps, built for one phone: mine.
 
-Under the hood it just hits your endpoint with a GET request and your secret key in a header:
+Under the hood it just POSTs to your endpoint with the fields in the query string and your
+secret key in a header (no request body):
 
 ```
-GET https://doughmination.uk/v2/devices?device=pixel&level=25&charging=1&lpm=0&wifi=Home
+POST https://doughmination.uk/v2/devices?device=pixel&level=25&charging=1&lpm=0&wifi=Home
 X-Battery-Key: <your key>
 ```
 

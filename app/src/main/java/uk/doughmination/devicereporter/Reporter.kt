@@ -54,11 +54,13 @@ object Reporter {
         val urlStr = buildUrl(prefs, snap)
         return try {
             val conn = (URL(urlStr).openConnection() as HttpURLConnection).apply {
-                requestMethod = "GET"
+                requestMethod = "POST"
                 connectTimeout = 15_000
                 readTimeout = 15_000
                 setRequestProperty("X-Battery-Key", prefs.apiKey)
                 setRequestProperty("Accept", "application/json")
+                // POST with no body — fields stay in the query string.
+                setRequestProperty("Content-Length", "0")
                 instanceFollowRedirects = true
             }
             val code = conn.responseCode
@@ -70,7 +72,7 @@ object Reporter {
                 ""
             }
             conn.disconnect()
-            Log.i(TAG, "GET $urlStr -> $code")
+            Log.i(TAG, "POST $urlStr -> $code")
             Result(ok, code, if (ok) "OK" else "HTTP $code $body")
         } catch (e: Exception) {
             Log.w(TAG, "report failed: ${e.message}")

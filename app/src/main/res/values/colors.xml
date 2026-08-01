@@ -1,3 +1,23 @@
 <resources>
-    <color name="ic_launcher_background">#0B6E4F</color>
+    <!-- Doughmination "info dark" palette, mirrored from the /docs page. -->
+    <color name="base">#0a0b10</color>
+    <color name="mantle">#070810</color>
+    <color name="crust">#050609</color>
+    <color name="surface0">#12141c</color>
+    <color name="surface1">#1b1e2a</color>
+    <color name="surface2">#232838</color>
+    <color name="overlay1">#6b7391</color>
+    <color name="subtext0">#9aa3c2</color>
+    <color name="subtext1">#c9cfe0</color>
+    <color name="text">#f4f6fb</color>
+
+    <color name="pink">#f5a9b8</color>
+    <color name="mauve">#c9a9f0</color>
+    <color name="red">#f38ba8</color>
+    <color name="peach">#fab387</color>
+    <color name="yellow">#f9e2af</color>
+    <color name="green">#a6e3a1</color>
+    <color name="blue">#89b4fa</color>
+
+    <color name="ic_launcher_background">#0a0b10</color>
 </resources>

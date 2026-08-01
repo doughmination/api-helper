@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/base"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,144 +12,313 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <TextView
-            android:layout_width="match_parent"
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Device Reporter"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:paddingBottom="12dp" />
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Device Reporter"
+                android:textColor="@color/text"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."
+                android:textColor="@color/pink"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Base URL"
-            android:textStyle="bold"
-            android:paddingTop="8dp" />
+            android:layout_marginTop="4dp"
+            android:text="Reports this device's state to your Doughmination API."
+            android:textColor="@color/subtext0"
+            android:textSize="13sp"
+            android:fontFamily="monospace" />
 
-        <EditText
-            android:id="@+id/inputBaseUrl"
+        <!-- Endpoint chip, echoing the /docs cards -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="https://doughmination.uk/v2"
-            android:inputType="textUri" />
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_card"
+            android:padding="14dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:baselineAligned="false">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_badge_post"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    android:text="POST"
+                    android:textColor="@color/yellow"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:fontFamily="monospace" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:text="/v2/devices"
+                    android:textColor="@color/text"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:fontFamily="monospace" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_pill_key"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    android:text="key"
+                    android:textColor="@color/mauve"
+                    android:textSize="11sp"
+                    android:fontFamily="monospace" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:text="Only 'device' is required; supplied fields are updated. Sends the X-Battery-Key header."
+                android:textColor="@color/subtext1"
+                android:textSize="13sp"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+
+        <!-- Configuration -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="X-Battery-Key"
-            android:textStyle="bold"
-            android:paddingTop="8dp" />
-
-        <EditText
-            android:id="@+id/inputApiKey"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="your secret key"
-            android:inputType="textPassword" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Device name"
-            android:textStyle="bold"
-            android:paddingTop="8dp" />
-
-        <EditText
-            android:id="@+id/inputDevice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="pixel"
-            android:inputType="text" />
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="10dp"
+            android:text="CONFIGURATION"
+            android:textColor="@color/pink"
+            android:textSize="12sp"
+            android:letterSpacing="0.08"
+            android:fontFamily="monospace" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingTop="16dp">
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="14dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Watch connected (manual)"
-                android:textStyle="bold" />
+            <TextView style="@style/FieldLabel" android:text="Base URL" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchWatch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/inputBaseUrl"
+                style="@style/FieldInput"
+                android:hint="https://doughmination.uk/v2"
+                android:inputType="textUri" />
+
+            <TextView style="@style/FieldLabel" android:text="X-Battery-Key" />
+
+            <EditText
+                android:id="@+id/inputApiKey"
+                style="@style/FieldInput"
+                android:hint="your device key"
+                android:inputType="textPassword" />
+
+            <TextView style="@style/FieldLabel" android:text="Device name" />
+
+            <EditText
+                android:id="@+id/inputDevice"
+                style="@style/FieldInput"
+                android:hint="pixel"
+                android:inputType="text" />
         </LinearLayout>
+
+        <!-- Peripherals -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="10dp"
+            android:text="PERIPHERALS"
+            android:textColor="@color/pink"
+            android:textSize="12sp"
+            android:letterSpacing="0.08"
+            android:fontFamily="monospace" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingTop="8dp">
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:padding="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Watch connected (manual)"
+                    android:textColor="@color/subtext1"
+                    android:textSize="14sp"
+                    android:fontFamily="monospace" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchWatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="6dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="AirPods (Bluetooth) reporting"
+                    android:textColor="@color/subtext1"
+                    android:textSize="14sp"
+                    android:fontFamily="monospace" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchAirpods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <TextView
-                android:layout_width="0dp"
+                android:id="@+id/textAirpodsDevice"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Enable AirPods (Bluetooth) reporting"
-                android:textStyle="bold" />
+                android:layout_marginTop="6dp"
+                android:text="No AirPods device selected"
+                android:textColor="@color/subtext0"
+                android:textSize="12sp"
+                android:fontFamily="monospace" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switchAirpods"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSelectAirpods"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Select AirPods device"
+                android:textColor="@color/mauve"
+                android:fontFamily="monospace"
+                app:cornerRadius="9dp"
+                app:strokeColor="@color/mauve"
+                app:rippleColor="@color/surface2" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textAirpodsDevice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="No AirPods device selected"
-            android:paddingTop="4dp" />
-
-        <Button
-            android:id="@+id/btnSelectAirpods"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Select AirPods device"
-            android:layout_marginTop="4dp" />
-
-        <Button
+        <!-- Actions -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="Save settings"
-            android:layout_marginTop="20dp" />
+            android:textColor="@color/base"
+            android:textAllCaps="false"
+            android:fontFamily="monospace"
+            app:backgroundTint="@color/pink"
+            app:cornerRadius="9dp" />
 
-        <Button
-            android:id="@+id/btnStart"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start reporting service"
-            android:layout_marginTop="8dp" />
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:baselineAligned="false">
 
-        <Button
-            android:id="@+id/btnStop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Stop reporting service"
-            android:layout_marginTop="8dp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="Start"
+                android:textColor="@color/base"
+                android:textAllCaps="false"
+                android:fontFamily="monospace"
+                app:backgroundTint="@color/green"
+                app:cornerRadius="9dp" />
 
-        <Button
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="Stop"
+                android:textColor="@color/base"
+                android:textAllCaps="false"
+                android:fontFamily="monospace"
+                app:backgroundTint="@color/red"
+                app:cornerRadius="9dp" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnTest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Send test report now"
-            android:layout_marginTop="8dp" />
+            android:textColor="@color/base"
+            android:textAllCaps="false"
+            android:fontFamily="monospace"
+            app:backgroundTint="@color/yellow"
+            app:cornerRadius="9dp" />
+
+        <!-- Status -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="10dp"
+            android:text="LAST REPORT"
+            android:textColor="@color/pink"
+            android:textSize="12sp"
+            android:letterSpacing="0.08"
+            android:fontFamily="monospace" />
 
         <TextView
             android:id="@+id/textStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_status"
+            android:padding="12dp"
             android:text="Idle."
-            android:paddingTop="20dp"
+            android:textColor="@color/subtext1"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
             android:textIsSelectable="true" />
 
     </LinearLayout>

@@ -72,13 +72,10 @@ There's no Android Studio needed — GitHub builds it for you.
 under the **Actions** tab and download the **device-reporter-debug-apk** artifact. Good for
 trying things out; signed with Android's throwaway debug key.
 
-**Proper signed release:** push a version tag and GitHub builds a signed APK and publishes it
-as the latest Release (see setup below). This is the one to actually keep on your phone.
-
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
+**Proper signed release:** go to the **Actions** tab → **Build APK** → **Run workflow**, type
+a version like `v1.0.0` in the box, and run it. GitHub builds a signed APK, creates that tag,
+and publishes it as the latest Release. This is the one to actually keep on your phone.
+(If you'd rather, pushing a `v*` tag from your terminal does the exact same thing.)
 
 A minute later, your repo's **Releases** page has `device-reporter-v1.0.0.apk` sitting at the
 top marked "Latest". Download it straight onto the Pixel.

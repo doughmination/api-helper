@@ -1,110 +1,139 @@
 # Device Reporter
 
-A tiny always-on Android app that reports your Pixel's state to your own API.
-It replaces the paid "battery worker" apps — self-hosted, one device, no cost.
+A little Android app that quietly tells your own API how your Pixel is doing — battery,
+charging, low-power mode, Wi-Fi, Bluetooth earbuds, and roughly where it is. It's the
+free, self-hosted answer to those paid "battery status" apps, built for one phone: mine.
 
-It calls your endpoint as an HTTP GET:
+Under the hood it just hits your endpoint with a GET request and your secret key in a header:
 
 ```
 GET https://doughmination.uk/v2/devices?device=pixel&level=25&charging=1&lpm=0&wifi=Home
-Header: X-Battery-Key: <your key>
+X-Battery-Key: <your key>
 ```
 
-The API updates only the fields it receives and leaves the rest untouched, so the
-app sends a full snapshot on every event.
+Your API only touches the fields it actually receives, so the app is happy to send a full
+picture every time without clobbering anything it didn't mean to.
 
-## What it reports and when
+## When it phones home
 
-| Trigger | Fields sent |
-|---|---|
-| Wi-Fi connect / disconnect | full snapshot (`wifi` = SSID, or `0` when disconnected) |
-| Charger connect / disconnect | full snapshot (`charging`) |
-| Power-save (low power mode) toggle | full snapshot (`lpm`) |
-| Chosen Bluetooth device connect / disconnect | full snapshot (`airpods`) |
-| Every 5 minutes | full snapshot + `location` (battery `level`, etc.) |
+It reports the moment something interesting happens, plus a heartbeat every five minutes:
 
-A full snapshot is: `device`, `level`, `charging`, `lpm`, `wifi`, `watch`, `airpods`.
-The 5-minute timer (and the in-app **test report**) additionally send `location`.
+- You join or leave a Wi-Fi network → sends the SSID (or `wifi=0` when you're off Wi-Fi).
+- You plug in or unplug the charger.
+- Battery Saver flips on or off.
+- Your chosen Bluetooth earbuds connect or disconnect.
+- Every 5 minutes regardless, as a battery check — and this one also includes your location.
 
-Every parameter value is URL-encoded before being placed in the query string.
+## What each field means
 
-### Field mapping
-
-- **device** — the device name you set in the app.
-- **level** — battery percentage `0–100`.
+- **device** — whatever name you set in the app.
+- **level** — battery percentage, 0–100.
 - **charging** — `1` plugged in, `0` on battery.
 - **lpm** — `1`/`0` from Android's Battery Saver.
-- **wifi** — SSID when connected; `0` when disconnected. (Withheld by the OS? the app
-  omits `wifi` rather than sending a wrong value — see permissions below.)
-- **watch** — manual toggle in settings. An Apple Watch cannot pair to a Pixel, so
-  there is nothing to auto-detect; flip it yourself if you want `watch=1`.
-- **airpods** — `1`/`0` based on the Bluetooth device you pick in settings. Open
-  **Select AirPods device**, choose your AirPods (or any earbuds) from the paired list,
-  and the app remembers it and reports `airpods=1` when it connects, `0` when it drops.
-- **location** — sent only on the 5-minute timer. The app takes the last-known GPS fix and
-  reverse-geocodes it to human-readable text `City, Region, Country` (not coordinates), e.g.
-  `location=London, England, United Kingdom`. Built from Android's `Geocoder` fields
-  `locality, adminArea, countryName`; any missing part is skipped. Omitted entirely if
-  location permission is off, location services are off, or geocoding returns nothing.
+- **wifi** — the network name when connected, or `0` when you're not.
+- **watch** — a manual switch. An Apple Watch can't pair to a Pixel, so there's nothing to
+  detect automatically; flip it yourself if you ever want `watch=1`.
+- **airpods** — `1`/`0` based on a Bluetooth device you choose. Tap **Select AirPods device**,
+  pick your buds from the paired list, and the app remembers them and reports when they
+  connect or drop.
+- **location** — sent on the 5-minute heartbeat only. The app takes your last-known GPS fix
+  and turns it into readable text like `London, England, United Kingdom` (never raw
+  coordinates). If it can't get a location, it just leaves the field out.
 
-## Settings screen
+Every value is URL-encoded, so spaces, commas, and symbols in a network name or place name
+travel safely.
 
-- **Base URL** — defaults to `https://doughmination.uk/v2`.
-- **X-Battery-Key** — your secret; stored only on the device, never baked into the APK.
-- **Device name** — e.g. `pixel`.
-- **Watch connected** — manual switch.
-- **Enable AirPods (Bluetooth) reporting** + **Select AirPods device**.
-- **Save**, **Start / Stop service**, **Send test report now** (shows the exact request URL and result).
+## The settings screen
 
-## Permissions
+Base URL (defaults to `https://doughmination.uk/v2`), your **X-Battery-Key**, and a device
+name. Below that: the manual **watch** switch, an **AirPods** toggle with a device picker,
+and buttons to **Save**, **Start**/**Stop** the service, and **Send a test report now** —
+the test button shows you the exact URL it sent and whether the server liked it. Your key
+lives only on the phone; it's never baked into the APK.
 
-- **Location (fine)** — Android requires it to read the Wi-Fi SSID and the device location.
-  Location services must be **on**, otherwise Android hides the SSID and no `location` is sent.
-- **Background location ("Allow all the time")** — needed so the 5-minute timer can read
-  location while the app is in the background. When you tap **Start**, Android opens the
-  all-the-time location screen; choose it, or the `location` field only fills while the app is open.
-- **Notifications** — the foreground service shows a quiet ongoing notification (Android needs this).
-- **Bluetooth (connect)** — to list paired devices and detect the AirPods connection.
-- **Battery optimization** — for the 5-minute timer to stay reliable, exempt the app:
-  Settings → Apps → Device Reporter → Battery → **Unrestricted**.
+## Permissions, and why
 
-## Build the APK (GitHub Actions)
+- **Location (fine)** — Android won't hand over the Wi-Fi name or your location without it.
+  Location services need to be switched on, too.
+- **Background location ("Allow all the time")** — so the 5-minute heartbeat can still read
+  your location when the app isn't open. When you tap Start, Android will ask; pick
+  all-the-time or the location field only fills while the app is in front.
+- **Notifications** — the background service shows one quiet, permanent notification. Android
+  requires it, and it doubles as a handy "last report was OK at 14:32" status line.
+- **Bluetooth** — to list your paired devices and notice when the earbuds come and go.
+- **Battery** — set the app to **Unrestricted** (Settings → Apps → Device Reporter → Battery)
+  or Android may throttle the 5-minute timer.
 
-This repo builds the installable APK for you in CI — no Android Studio needed.
+## Getting the APK
 
-1. Push this project to a GitHub repo.
-2. The **Build APK** workflow runs automatically on every push (or run it manually from
-   the **Actions** tab → *Build APK* → *Run workflow*).
-3. Open the finished run and download the **device-reporter-debug-apk** artifact.
-4. Unzip it to get `app-debug.apk`.
+There's no Android Studio needed — GitHub builds it for you.
 
-### Build locally instead (optional)
+**Quick test build:** every push runs the workflow and produces a debug APK. Open the run
+under the **Actions** tab and download the **device-reporter-debug-apk** artifact. Good for
+trying things out; signed with Android's throwaway debug key.
+
+**Proper signed release:** push a version tag and GitHub builds a signed APK and publishes it
+as the latest Release (see setup below). This is the one to actually keep on your phone.
 
 ```bash
-./gradlew assembleDebug
-# output: app/build/outputs/apk/debug/app-debug.apk
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
-## Install on the Pixel
+A minute later, your repo's **Releases** page has `device-reporter-v1.0.0.apk` sitting at the
+top marked "Latest". Download it straight onto the Pixel.
 
-1. Copy `app-debug.apk` to the phone (or download the artifact directly on it).
-2. Open it; allow **install from unknown sources** if prompted.
-3. Launch **Device Reporter**, fill in the key, tap **Save**, then **Start reporting service**.
-4. Grant the location, notification, and Bluetooth prompts.
-5. Tap **Send test report now** to confirm the server receives it.
+### One-time signing setup
 
-The debug APK is signed with Android's standard debug key — fine for a personal device.
-For a "proper" signed release build, add a keystore and an `assembleRelease` signing config.
+You need a keystore (your personal signing key) and four repo secrets. Make the keystore once:
 
-## Project layout
+```bash
+keytool -genkeypair -v \
+  -keystore release.keystore \
+  -alias device-reporter \
+  -keyalg RSA -keysize 2048 -validity 10000
+```
+
+It'll ask for a password and a few details — remember the password. Then base64-encode the
+keystore so it can live in a secret:
+
+```bash
+base64 -i release.keystore | pbcopy   # macOS: now in your clipboard
+```
+
+In your repo, go to **Settings → Secrets and variables → Actions** and add four secrets:
+
+- `SIGNING_KEYSTORE_BASE64` — paste the base64 blob from above.
+- `SIGNING_STORE_PASSWORD` — the keystore password.
+- `SIGNING_KEY_ALIAS` — `device-reporter` (or whatever `-alias` you used).
+- `SIGNING_KEY_PASSWORD` — the key password (same as the store password unless you set a separate one).
+
+Keep `release.keystore` itself safe and out of git — losing it means you can't ship signed
+updates that install over an existing copy. That's it; tag a version and the release builds itself.
+
+### Building locally instead
+
+```bash
+./gradlew assembleDebug     # app/build/outputs/apk/debug/app-debug.apk
+./gradlew assembleRelease   # falls back to the debug key if no signing secrets are set
+```
+
+## Installing on the Pixel
+
+Copy the APK over (or download it directly on the phone), open it, and allow installing from
+unknown sources if prompted. Launch **Device Reporter**, put in your key, hit **Save**, then
+**Start reporting service**, and say yes to the location, notification, and Bluetooth prompts.
+Tap **Send test report now** to make sure the server hears it.
+
+## How it's laid out
 
 ```
 app/src/main/java/uk/doughmination/devicereporter/
-  MainActivity.kt      settings UI + Bluetooth picker + permissions
-  Prefs.kt             SharedPreferences config
-  DeviceState.kt       battery / charging / lpm / wifi readers
-  Reporter.kt          builds the URL and does the GET (X-Battery-Key header)
-  ReporterService.kt   foreground service: receivers + 5-min timer
-  BootReceiver.kt      restarts the service after reboot
-.github/workflows/build.yml   CI that builds and uploads the APK
+  MainActivity.kt      settings screen, Bluetooth picker, permission prompts
+  Prefs.kt             saved configuration
+  DeviceState.kt       reads battery / charging / lpm / wifi / location
+  Reporter.kt          builds the URL and sends it (with the X-Battery-Key header)
+  ReporterService.kt   the always-on service: event triggers + 5-minute timer
+  BootReceiver.kt      brings the service back after a reboot
+.github/workflows/build.yml   builds the debug APK and publishes signed releases
 ```

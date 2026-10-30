@@ -1,24 +1,110 @@
 <resources>
 
+    <!-- web's .eyebrow: small, accent, tracked-out caps -->
+    <style name="Eyebrow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">28dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.14</item>
+    </style>
+
+    <!-- pastebin's .panel: raised surface, hairline, 1rem corners -->
+    <style name="Panel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:paddingHorizontal">20dp</item>
+        <item name="android:paddingVertical">16dp</item>
+    </style>
+
     <style name="FieldLabel">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">12dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
-        <item name="android:textColor">@color/pink</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">monospace</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:textColor">@color/muted</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans_medium</item>
     </style>
 
     <style name="FieldInput">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">48dp</item>
         <item name="android:background">@drawable/bg_input</item>
-        <item name="android:padding">12dp</item>
+        <item name="android:paddingHorizontal">14dp</item>
+        <item name="android:paddingVertical">10dp</item>
         <item name="android:textColor">@color/text</item>
-        <item name="android:textColorHint">@color/overlay1</item>
+        <item name="android:textColorHint">@color/muted</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:fontFamily">monospace</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans</item>
+        <item name="android:importantForAutofill">no</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="RowLabel">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="RowHint">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/muted</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- pastebin's button.primary -->
+    <style name="Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans_semibold</item>
+        <item name="android:textColor">@color/on_accent</item>
+        <item name="backgroundTint">@color/accent</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <!-- pastebin's plain button: raised surface + hairline, accent ring on press -->
+    <style name="Button.Raised" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="backgroundTint">@color/raised</item>
+        <item name="strokeColor">@color/line</item>
+        <item name="rippleColor">@color/accent_dim</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <style name="Button.Danger" parent="Button.Raised">
+        <item name="android:textColor">@color/bad</item>
+    </style>
+
+    <style name="Button.Small" parent="Button.Raised">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:paddingHorizontal">14dp</item>
+    </style>
+
+    <style name="Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="thumbTint">@color/switch_thumb</item>
+        <item name="trackTint">@color/switch_track</item>
+        <item name="trackDecorationTint">@color/switch_track_outline</item>
     </style>
 
 </resources>

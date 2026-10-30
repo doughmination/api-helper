@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Status-bar icon: phone sending signal. White on transparent, tinted by the system. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M10,4h4a2,2 0,0 1,2 2v12a2,2 0,0 1,-2 2h-4a2,2 0,0 1,-2 -2v-12a2,2 0,0 1,2 -2zM10,6.5v11h4v-11z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M11,12.5h2v3.5h-2z" />
+    <path
+        android:pathData="M18.5,8.5a5,5 0,0 1,0 7M5.5,8.5a5,5 0,0 0,0 7"
+        android:strokeWidth="1.8"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeLineCap="round" />
+</vector>

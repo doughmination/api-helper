@@ -1,17 +1,32 @@
 <resources>
-    <style name="Theme.DeviceReporter" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="android:windowBackground">@color/base</item>
-        <item name="android:statusBarColor">@color/mantle</item>
-        <item name="android:navigationBarColor">@color/base</item>
-        <item name="colorPrimary">@color/pink</item>
-        <item name="colorOnPrimary">@color/base</item>
-        <item name="colorSecondary">@color/pink</item>
-        <item name="colorOnSecondary">@color/base</item>
-        <item name="colorControlActivated">@color/pink</item>
-        <item name="colorControlNormal">@color/subtext0</item>
-        <item name="android:textColor">@color/text</item>
+    <!-- Edge-to-edge is set up in MainActivity; the system bars are transparent over @color/bg. -->
+    <style name="Theme.DeviceReporter" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorOnPrimary">@color/on_accent</item>
+        <item name="colorPrimaryContainer">@color/accent_dim</item>
+        <item name="colorOnPrimaryContainer">@color/text</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorOnSecondary">@color/on_accent</item>
+        <item name="colorSurface">@color/bg</item>
+        <item name="colorOnSurface">@color/text</item>
+        <item name="colorOnSurfaceVariant">@color/muted</item>
+        <item name="colorOutline">@color/line</item>
+        <item name="colorError">@color/bad</item>
         <item name="android:textColorPrimary">@color/text</item>
-        <item name="android:textColorHint">@color/overlay1</item>
-        <item name="android:fontFamily">monospace</item>
+        <item name="android:textColorSecondary">@color/muted</item>
+        <item name="android:textColorHint">@color/muted</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans</item>
+        <item name="fontFamily">@font/ibm_plex_sans</item>
+        <item name="materialSwitchStyle">@style/Switch</item>
+        <item name="alertDialogTheme">@style/Dialog</item>
+        <item name="materialAlertDialogTheme">@style/Dialog</item>
+    </style>
+
+    <style name="Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">#17151b</item>
+        <item name="colorSurfaceContainerHigh">#17151b</item>
+        <item name="colorPrimary">@color/accent</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans</item>
     </style>
 </resources>

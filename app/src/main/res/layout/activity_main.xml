@@ -1,131 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base"
+    android:clipToPadding="false"
     android:fillViewport="true">
 
     <LinearLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingHorizontal="20dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="32dp">
 
-        <!-- Header -->
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <!-- Hero, after web's .eyebrow / h1 / .subtitle -->
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Device Reporter"
-                android:textColor="@color/text"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:fontFamily="monospace" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="."
-                android:textColor="@color/pink"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:fontFamily="monospace" />
-        </LinearLayout>
+            android:text="doughmination.uk"
+            android:textAllCaps="true"
+            android:textColor="@color/accent"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.14" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Reports this device's state to your Doughmination API."
-            android:textColor="@color/subtext0"
-            android:textSize="13sp"
-            android:fontFamily="monospace" />
+            android:text="Device Reporter"
+            android:textColor="@color/text"
+            android:textSize="34sp"
+            android:textStyle="bold"
+            android:letterSpacing="-0.03" />
 
-        <!-- Endpoint chip, echoing the /docs cards -->
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_card"
-            android:padding="14dp">
+            android:layout_marginTop="2dp"
+            android:text="Tells your API how this phone is doing."
+            android:textColor="@color/muted"
+            android:textSize="16sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:baselineAligned="false">
+        <TextView
+            android:id="@+id/textServiceState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_pill"
+            app:drawableStartCompat="@drawable/dot"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="5dp"
+            android:text="Stopped"
+            android:textColor="@color/muted"
+            android:textSize="13sp"
+            android:fontFamily="@font/ibm_plex_sans_medium" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_badge_post"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="2dp"
-                    android:text="POST"
-                    android:textColor="@color/yellow"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:fontFamily="monospace" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="10dp"
-                    android:text="/v2/devices"
-                    android:textColor="@color/text"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:fontFamily="monospace" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_pill_key"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="2dp"
-                    android:text="key"
-                    android:textColor="@color/mauve"
-                    android:textSize="11sp"
-                    android:fontFamily="monospace" />
-            </LinearLayout>
+        <!-- Endpoint -->
+        <LinearLayout
+            style="@style/Panel"
+            android:layout_marginTop="24dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
-                android:text="Only 'device' is required; supplied fields are updated. Sends the X-Battery-Key header."
-                android:textColor="@color/subtext1"
-                android:textSize="13sp"
-                android:fontFamily="monospace" />
+                android:fontFamily="monospace"
+                android:text="POST /v2/devices"
+                android:textColor="@color/text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/RowHint"
+                android:layout_marginTop="6dp"
+                android:text="Only device is required; the API updates just the fields it receives. Your key goes in the X-Battery-Key header." />
         </LinearLayout>
 
         <!-- Configuration -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:layout_marginBottom="10dp"
-            android:text="CONFIGURATION"
-            android:textColor="@color/pink"
-            android:textSize="12sp"
-            android:letterSpacing="0.08"
-            android:fontFamily="monospace" />
+        <TextView style="@style/Eyebrow" android:text="Configuration" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/bg_card"
-            android:padding="14dp">
+        <LinearLayout style="@style/Panel" android:paddingTop="4dp">
 
             <TextView style="@style/FieldLabel" android:text="Base URL" />
 
@@ -148,67 +107,50 @@
             <EditText
                 android:id="@+id/inputDevice"
                 style="@style/FieldInput"
-                android:hint="pixel"
+                android:hint="phone"
                 android:inputType="text" />
         </LinearLayout>
 
         <!-- Peripherals -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:layout_marginBottom="10dp"
-            android:text="PERIPHERALS"
-            android:textColor="@color/pink"
-            android:textSize="12sp"
-            android:letterSpacing="0.08"
-            android:fontFamily="monospace" />
+        <TextView style="@style/Eyebrow" android:text="Peripherals" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/bg_card"
-            android:padding="14dp">
+        <LinearLayout style="@style/Panel">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Watch connected (manual)"
-                    android:textColor="@color/subtext1"
-                    android:textSize="14sp"
-                    android:fontFamily="monospace" />
+                <TextView style="@style/RowLabel" android:text="Watch connected" />
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switchWatch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
+            <TextView
+                style="@style/RowHint"
+                android:text="Manual: an Apple Watch can't pair with Android, so flip this yourself." />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="14dp"
+                android:background="@color/line" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginTop="6dp">
+                android:minHeight="48dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="AirPods (Bluetooth) reporting"
-                    android:textColor="@color/subtext1"
-                    android:textSize="14sp"
-                    android:fontFamily="monospace" />
+                <TextView style="@style/RowLabel" android:text="Report AirPods" />
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/switchAirpods"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -216,110 +158,180 @@
 
             <TextView
                 android:id="@+id/textAirpodsDevice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="No AirPods device selected"
-                android:textColor="@color/subtext0"
-                android:textSize="12sp"
-                android:fontFamily="monospace" />
+                style="@style/RowHint"
+                android:text="No device selected" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSelectAirpods"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Button.Small"
+                android:layout_marginTop="10dp"
+                android:text="Choose Bluetooth device" />
+        </LinearLayout>
+
+        <!-- Background: what One UI needs to leave the service alone -->
+        <TextView style="@style/Eyebrow" android:text="Background" />
+
+        <LinearLayout style="@style/Panel">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Battery: unrestricted"
+                        android:textColor="@color/text"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/textBattery"
+                        style="@style/RowHint"
+                        android:text="Checking…" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBattery"
+                    style="@style/Button.Small"
+                    android:layout_marginStart="12dp"
+                    android:text="Allow" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Select AirPods device"
-                android:textColor="@color/mauve"
-                android:fontFamily="monospace"
-                app:cornerRadius="9dp"
-                app:strokeColor="@color/mauve"
-                app:rippleColor="@color/surface2" />
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Location: all the time"
+                        android:textColor="@color/text"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/textLocation"
+                        style="@style/RowHint"
+                        android:text="Checking…" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLocation"
+                    style="@style/Button.Small"
+                    android:layout_marginStart="12dp"
+                    android:text="Allow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:minHeight="48dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="On-time heartbeat"
+                        android:textColor="@color/text"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/textAlarms"
+                        style="@style/RowHint"
+                        android:text="Checking…" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAlarms"
+                    style="@style/Button.Small"
+                    android:layout_marginStart="12dp"
+                    android:text="Allow" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/RowHint"
+                android:layout_marginTop="14dp"
+                android:text="On Samsung, also keep this app off the sleeping lists: Settings › Battery › Background usage limits." />
         </LinearLayout>
 
         <!-- Actions -->
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Save settings"
-            android:textColor="@color/base"
-            android:textAllCaps="false"
-            android:fontFamily="monospace"
-            app:backgroundTint="@color/pink"
-            app:cornerRadius="9dp" />
+            android:id="@+id/btnStart"
+            style="@style/Button.Primary"
+            android:layout_marginTop="28dp"
+            android:text="Start reporting" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStop"
+            style="@style/Button.Danger"
+            android:layout_marginTop="28dp"
+            android:text="Stop reporting"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:baselineAligned="false">
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnStart"
+                android:id="@+id/btnSave"
+                style="@style/Button.Raised"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="4dp"
-                android:text="Start"
-                android:textColor="@color/base"
-                android:textAllCaps="false"
-                android:fontFamily="monospace"
-                app:backgroundTint="@color/green"
-                app:cornerRadius="9dp" />
+                android:layout_weight="1"
+                android:text="Save" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnStop"
+                android:id="@+id/btnTest"
+                style="@style/Button.Raised"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="4dp"
-                android:text="Stop"
-                android:textColor="@color/base"
-                android:textAllCaps="false"
-                android:fontFamily="monospace"
-                app:backgroundTint="@color/red"
-                app:cornerRadius="9dp" />
+                android:layout_weight="1"
+                android:text="Send test" />
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnTest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Send test report now"
-            android:textColor="@color/base"
-            android:textAllCaps="false"
-            android:fontFamily="monospace"
-            app:backgroundTint="@color/yellow"
-            app:cornerRadius="9dp" />
-
         <!-- Status -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:layout_marginBottom="10dp"
-            android:text="LAST REPORT"
-            android:textColor="@color/pink"
-            android:textSize="12sp"
-            android:letterSpacing="0.08"
-            android:fontFamily="monospace" />
+        <TextView style="@style/Eyebrow" android:text="Last report" />
 
         <TextView
             android:id="@+id/textStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_status"
-            android:padding="12dp"
-            android:text="Idle."
-            android:textColor="@color/subtext1"
-            android:textSize="12sp"
+            android:background="@drawable/bg_code"
             android:fontFamily="monospace"
-            android:textIsSelectable="true" />
+            android:padding="14dp"
+            android:text="Nothing sent yet."
+            android:textColor="@color/lede"
+            android:textIsSelectable="true"
+            android:textSize="12sp" />
 
     </LinearLayout>
 </ScrollView>

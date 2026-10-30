@@ -6,8 +6,8 @@ import java.net.URL
 import java.net.URLEncoder
 
 /**
- * Sends a device-state snapshot to the API as an HTTP GET:
- *   GET {baseUrl}/devices?device=...&level=...  with header  X-Battery-Key: {key}
+ * Sends a device-state snapshot to the API as a body-less HTTP POST:
+ *   POST {baseUrl}/devices?device=...&level=...  with header  X-Battery-Key: {key}
  *
  * The API updates only the fields supplied and leaves the rest untouched,
  * so sending a full snapshot on every event is safe.
